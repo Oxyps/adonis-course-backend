@@ -1,9 +1,7 @@
-'use strict'
-
-const Env = use('Env')
+const Env = use('Env');
 
 module.exports = {
-  /*
+	/*
   |--------------------------------------------------------------------------
   | Connection
   |--------------------------------------------------------------------------
@@ -12,9 +10,9 @@ module.exports = {
   | define a driver too.
   |
   */
-  connection: Env.get('MAIL_CONNECTION', 'smtp'),
+	connection: Env.get('MAIL_CONNECTION', 'smtp'),
 
-  /*
+	/*
   |--------------------------------------------------------------------------
   | SMTP
   |--------------------------------------------------------------------------
@@ -22,22 +20,22 @@ module.exports = {
   | Here we define configuration for sending emails via SMTP.
   |
   */
-  smtp: {
-    driver: 'smtp',
-    pool: true,
-    port: Env.get('SMTP_PORT', 2525),
-    host: Env.get('SMTP_HOST'),
-    secure: false,
-    auth: {
-      user: Env.get('MAIL_USERNAME'),
-      pass: Env.get('MAIL_PASSWORD')
-    },
-    maxConnections: 5,
-    maxMessages: 100,
-    rateLimit: 10
-  },
+	smtp: {
+		driver: 'smtp',
+		pool: true,
+		port: Env.get('SMTP_PORT', 2525),
+		host: Env.get('SMTP_HOST'),
+		secure: false,
+		auth: {
+			user: Env.get('MAIL_USERNAME'),
+			pass: Env.get('MAIL_PASSWORD'),
+		},
+		maxConnections: 5,
+		maxMessages: 100,
+		rateLimit: 10,
+	},
 
-  /*
+	/*
   |--------------------------------------------------------------------------
   | SparkPost
   |--------------------------------------------------------------------------
@@ -53,13 +51,13 @@ module.exports = {
   | }
   |
   */
-  sparkpost: {
-    driver: 'sparkpost',
-    apiKey: Env.get('SPARKPOST_API_KEY'),
-    extras: {}
-  },
+	sparkpost: {
+		driver: 'sparkpost',
+		apiKey: Env.get('SPARKPOST_API_KEY'),
+		extras: {},
+	},
 
-  /*
+	/*
   |--------------------------------------------------------------------------
   | Mailgun
   |--------------------------------------------------------------------------
@@ -76,15 +74,15 @@ module.exports = {
   | }
   |
   */
-  mailgun: {
-    driver: 'mailgun',
-    domain: Env.get('MAILGUN_DOMAIN'),
-    region: Env.get('MAILGUN_API_REGION'),
-    apiKey: Env.get('MAILGUN_API_KEY'),
-    extras: {}
-  },
+	mailgun: {
+		driver: 'mailgun',
+		domain: Env.get('MAILGUN_DOMAIN'),
+		region: Env.get('MAILGUN_API_REGION'),
+		apiKey: Env.get('MAILGUN_API_KEY'),
+		extras: {},
+	},
 
-  /*
+	/*
   |--------------------------------------------------------------------------
   | Ethereal
   |--------------------------------------------------------------------------
@@ -95,7 +93,7 @@ module.exports = {
   | https://ethereal.email
   |
   */
-  ethereal: {
-    driver: 'ethereal'
-  }
-}
+	ethereal: {
+		driver: 'ethereal',
+	},
+};

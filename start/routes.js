@@ -15,9 +15,16 @@
 const Route = use('Route');
 
 Route.post('/sessions', 'SessionController.store').validator('Session');
-Route.post('/forgot-password', 'ForgotPasswordController.store').validator(
-	'ForgotPassword'
-);
-Route.post('/reset-password', 'ResetPasswordController.store').validator(
-	'ResetPassword'
-);
+
+Route.group(() => {
+	Route.post('/forgot-password', 'ForgotPasswordController.store').validator(
+		'ForgotPassword'
+	);
+	Route.post('/reset-password', 'ResetPasswordController.store').validator(
+		'ResetPassword'
+	);
+
+	Route.get('/courses', 'CourseController.index');
+	Route.get('/courses/:id', 'CourseController.show');
+	Route.post('/courses', 'CourseController.store').validator('Course');
+}).middleware('auth:jwt');

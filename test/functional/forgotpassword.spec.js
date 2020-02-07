@@ -11,16 +11,18 @@ const Database = use('Database');
 
 trait('Test/ApiClient');
 trait('DatabaseTransactions');
+trait('Auth/Client');
+
+const email = 'test@test.com';
 
 test('it should send reset pasword email', async ({ assert, client }) => {
 	Mail.fake();
-
-	const email = 'abel_castro_junior@hotmail.com';
 
 	const user = await Factory.model('App/Models/User').create({ email });
 
 	await client
 		.post('/forgot-password')
+		.loginVia(user, 'jwt')
 		.send({ email })
 		.end();
 
@@ -38,8 +40,6 @@ test('it should send reset pasword email', async ({ assert, client }) => {
 });
 
 test('it should reset password', async ({ assert, client }) => {
-	const email = 'abel_castro_junior@hotmail.com';
-
 	const user = await Factory.model('App/Models/User').create({ email });
 	const userToken = await Factory.model('App/Models/Token').make();
 
@@ -47,23 +47,22 @@ test('it should reset password', async ({ assert, client }) => {
 
 	await client
 		.post('/reset-password')
+		.loginVia(user, 'jwt')
 		.send({
 			token: userToken.token,
-			password: '123456',
-			password_confirmation: '123456',
+			password: 'test',
+			password_confirmation: 'test',
 		})
 		.end();
 
 	await user.reload();
 
-	const checkPassword = await Hash.verify('123456', user.password);
+	const checkPassword = await Hash.verify('test', user.password);
 
 	assert.isTrue(checkPassword);
 });
 
 test('it should expire the token after 5 hours', async ({ client }) => {
-	const email = 'abel_castro_junior@hotmail.com';
-
 	const user = await Factory.model('App/Models/User').create({ email });
 	const userToken = await Factory.model('App/Models/Token').make();
 
@@ -79,10 +78,11 @@ test('it should expire the token after 5 hours', async ({ client }) => {
 
 	const response = await client
 		.post('/reset-password')
+		.loginVia(user, 'jwt')
 		.send({
 			token: userToken.token,
-			password: '123456',
-			password_confirmation: '123456',
+			password: 'test',
+			password_confirmation: 'test',
 		})
 		.end();
 

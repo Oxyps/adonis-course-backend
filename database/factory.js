@@ -28,3 +28,12 @@ Factory.blueprint('App/Models/Token', (faker, i, data = {}) => {
 		...data,
 	};
 });
+
+Factory.blueprint('App/Models/Course', (faker, i, data = {}) => {
+	return {
+		name: faker.sentence({ words: 7 }),
+		description: faker.paragraph(),
+		class: faker.integer({ min: 1, max: 3 }),
+		...data,
+	};
+});

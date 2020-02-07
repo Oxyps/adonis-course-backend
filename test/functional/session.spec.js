@@ -11,8 +11,8 @@ test('it should return JWT token when session created', async ({
 	client,
 }) => {
 	const sessionPayload = {
-		email: 'abel_castro_junior@hotmail.com',
-		password: '123456',
+		email: 'test@test.com',
+		password: 'test',
 	};
 
 	await Factory.model('App/Models/User').create(sessionPayload);

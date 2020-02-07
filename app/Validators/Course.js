@@ -18,7 +18,7 @@ class Course {
 			name: [rule('required')],
 			description: [rule('required')],
 			class: [rule('required'), rule('in', [1, 2, 3])],
-			user_id: [rule('required'), rule('exists', ['users', 'id'])],
+			user_id: [rule('exists', ['users', 'id'])],
 		};
 	}
 

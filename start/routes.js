@@ -14,9 +14,13 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
+Route.get('/files/:file', 'FileController.show');
+
 Route.post('/sessions', 'SessionController.store').validator('Session');
 
 Route.group(() => {
+	Route.put('/profile', 'ProfileController.update').validator('Profile');
+
 	Route.post('/forgot-password', 'ForgotPasswordController.store').validator(
 		'ForgotPassword'
 	);
@@ -25,6 +29,9 @@ Route.group(() => {
 	);
 
 	Route.get('/courses', 'CourseController.index');
-	Route.get('/courses/:id', 'CourseController.show');
 	Route.post('/courses', 'CourseController.store').validator('Course');
+
+	Route.get('/courses/:id', 'CourseController.show');
+	Route.put('/courses/:id', 'CourseController.update').validator('Course');
+	Route.delete('/courses/:id', 'CourseController.destroy');
 }).middleware('auth:jwt');

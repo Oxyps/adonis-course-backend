@@ -21,23 +21,12 @@ class CourseController {
 	async index() {
 		const courses = await Course.query()
 			.with('user', builder => {
-				builder.select(['id', 'name']);
+				builder.select(['id', 'name', 'avatar']);
 			})
 			.fetch();
 
 		return courses;
 	}
-
-	/**
-	 * Render a form to be used for creating a new course.
-	 * GET courses/create
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async create({ request, response, view }) {}
 
 	/**
 	 * Create/save a new course.
@@ -74,17 +63,6 @@ class CourseController {
 	}
 
 	/**
-	 * Render a form to update an existing course.
-	 * GET courses/:id/edit
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async edit({ params, request, response, view }) {}
-
-	/**
 	 * Update course details.
 	 * PUT or PATCH courses/:id
 	 *
@@ -92,7 +70,17 @@ class CourseController {
 	 * @param {Request} ctx.request
 	 * @param {Response} ctx.response
 	 */
-	async update({ params, request, response }) {}
+	async update({ params, request }) {
+		const data = request.only(['user_id', 'name', 'description', 'class']);
+
+		const course = await Course.find(params.id);
+
+		course.merge(data);
+
+		await course.save();
+
+		return course;
+	}
 
 	/**
 	 * Delete a course with id.
@@ -102,7 +90,11 @@ class CourseController {
 	 * @param {Request} ctx.request
 	 * @param {Response} ctx.response
 	 */
-	async destroy({ params, request, response }) {}
+	async destroy({ params }) {
+		const course = await Course.find(params.id);
+
+		await course.delete();
+	}
 }
 
 module.exports = CourseController;

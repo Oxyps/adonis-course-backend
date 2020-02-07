@@ -67,7 +67,7 @@ class CourseController {
 	async show({ params }) {
 		const course = await Course.find(params.id);
 		await course.load('user', builder => {
-			builder.select(['id', 'name', 'github', 'occupation']);
+			builder.select(['id', 'name', 'github', 'occupation', 'avatar']);
 		});
 
 		return course;

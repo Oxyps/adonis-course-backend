@@ -29,7 +29,7 @@
 		"@adonisjs/validator": "^5.0.6",
 		"@adonisjs/vow": "^1.0.17",
 		"date-fns": "^2.9.0",
-		"knex": "^0.20.8",
+		"knex": "^2.4.0",
 		"pg": "^7.18.1"
 	},
 	"devDependencies": {
